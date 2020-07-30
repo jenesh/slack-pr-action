@@ -15,12 +15,15 @@ try {
   // console.log(`The event payload: ${payload}`);
 
   const slackHook = core.getInput('slack_hook')
-  const slackJSON = core.getInput('slack_json')
+  // const slackJSON = core.getInput('slack_json')
+  const jsonData = {
+    text: 'Hello world!'
+  }
 
   const options = {
     method: 'post',
     url: slackHook,
-    data: JSON.stringify(slackJSON),
+    data: JSON.stringify(jsonData),
     headers: { 'content-type': 'application/x-www-form-urlencoded' }
   }
 
