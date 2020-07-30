@@ -28,7 +28,11 @@ try {
     headers: { 'content-type': 'application/x-www-form-urlencoded' }
   }
 
-  axios.post(options)
+  try {
+    axios.post(options)
+  } catch (err) {
+    console.log(`Error =>`, err)
+  }
 } catch (error) {
   core.setFailed(error.message);
 }
