@@ -26,7 +26,7 @@ try {
     method: 'post',
     url: slackHook,
     data: JSON.stringify(jsonData),
-    headers: { 'content-type': 'application/x-www-form-urlencoded' }
+    headers: { 'content-type': 'application/json' }
   }
 
   try {
