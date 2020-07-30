@@ -15,6 +15,7 @@ try {
   // console.log(`The event payload: ${payload}`);
 
   const slackHook = core.getInput('slack_hook')
+  console.log(slackHook)
   // const slackJSON = core.getInput('slack_json')
   const jsonData = {
     text: 'Hello world!'
