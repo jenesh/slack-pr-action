@@ -3,34 +3,28 @@ const github = require('@actions/github');
 const axios = require('axios');
 
 try {
-  // const nameToGreet = core.getInput('who-to-greet');
-  // console.log(`Hello ${nameToGreet}!`);
+  const slackHook = `https://hooks.slack.com/services/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`
 
-  // const time = (new Date()).toTimeString();
-  // core.setOutput("time", time);
-
-  // Get the JSON webhook payload for the event that triggered the workflow
-
-  // const payload = JSON.stringify(github.context.payload, undefined, 2)
-  // console.log(`The event payload: ${payload}`);
-
-  const slackHook = core.getInput('slack_hook')
   console.log(`SLACK HOOK TYPE`, typeof slackHook)
   console.log(`SLACK HOOK`, slackHook)
-  // const slackJSON = core.getInput('slack_json')
+
   const jsonData = {
     text: 'Hello world!'
   }
 
-  const options = {
-    method: 'post',
-    url: `${slackHook}`,
-    data: JSON.stringify(jsonData),
-    headers: { 'content-type': 'application/json' }
-  }
+  // const options = {
+  //   method: 'post',
+  //   url: `${slackHook}`,
+  //   data: JSON.stringify(jsonData),
+  //   headers: { 'content-type': 'application/json' }
+  // }
 
-  axios.post(options)
-    .then(data => console.log(`Sucess`))
+  // axios.post(options)
+  //   .then(data => console.log(`Sucess`))
+  //   .catch(err => console.log(`Error =>`, err))
+
+  axios.post(slackHook, jsonData)
+    .then(data => console.log(`Sucess`, data))
     .catch(err => console.log(`Error =>`, err))
   
 } catch (error) {
