@@ -4,7 +4,8 @@ const axios = require('axios');
 
 const test = () => {
   try {
-    const slackHook = `https://hooks.slack.com/services/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`
+    // const slackHook = `https://hooks.slack.com/services/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`
+    const slackHook = `https://hooks.slack.com/services/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`
 
     console.log(`SLACK HOOK TYPE`, typeof slackHook)
     console.log(`SLACK HOOK`, slackHook)
