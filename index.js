@@ -4,8 +4,7 @@ const axios = require('axios');
 
 const test = () => {
   try {
-    // const slackHook = `https://hooks.slack.com/services/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`
-    const slackHook = `https://hooks.slack.com/services/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`
+    const slackHook = `https://hooks.slack.com/services/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`
 
     console.log(`SLACK HOOK TYPE`, typeof slackHook)
     console.log(`SLACK HOOK`, slackHook)
@@ -20,50 +19,8 @@ const test = () => {
           "type": "section",
           "text": {
             "type": "mrkdwn",
-            "text": "Hello, Assistant to the Regional Manager Dwight! *Michael Scott* wants to know where you'd like to take the Paper Company investors to dinner tonight.\n\n *Please select a restaurant:*"
+            "text": "You have a new request:\n*<fakeLink.toEmployeeProfile.com|Fred Enriquez - New device request>*"
           }
-        },
-        {
-          "type": "divider"
-        },
-        {
-          "type": "section",
-          "text": {
-            "type": "mrkdwn",
-            "text": "*Farmhouse Thai Cuisine*\n:star::star::star::star: 1528 reviews\n They do have some vegan options, like the roti and curry, plus they have a ton of salad stuff and noodles can be ordered without meat!! They have something for everyone here"
-          },
-          "accessory": {
-            "type": "image",
-            "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/c7ed05m9lC2EmA3Aruue7A/o.jpg",
-            "alt_text": "alt text for image"
-          }
-        },
-        {
-          "type": "section",
-          "text": {
-            "type": "mrkdwn",
-            "text": "*Kin Khao*\n:star::star::star::star: 1638 reviews\n The sticky rice also goes wonderfully with the caramelized pork belly, which is absolutely melt-in-your-mouth and so soft."
-          },
-          "accessory": {
-            "type": "image",
-            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/korel-1YjNtFtJlMTaC26A/o.jpg",
-            "alt_text": "alt text for image"
-          }
-        },
-        {
-          "type": "section",
-          "text": {
-            "type": "mrkdwn",
-            "text": "*Ler Ros*\n:star::star::star::star: 2082 reviews\n I would really recommend the  Yum Koh Moo Yang - Spicy lime dressing and roasted quick marinated pork shoulder, basil leaves, chili & rice powder."
-          },
-          "accessory": {
-            "type": "image",
-            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/DawwNigKJ2ckPeDeDM7jAg/o.jpg",
-            "alt_text": "alt text for image"
-          }
-        },
-        {
-          "type": "divider"
         },
         {
           "type": "actions",
@@ -72,27 +29,20 @@ const test = () => {
               "type": "button",
               "text": {
                 "type": "plain_text",
-                "text": "Farmhouse",
-                "emoji": true
+                "emoji": true,
+                "text": "Approve"
               },
-              "value": "click_me_123"
+              "style": "primary",
+              "value": "https://www.google.com"
             },
             {
               "type": "button",
               "text": {
                 "type": "plain_text",
-                "text": "Kin Khao",
-                "emoji": true
+                "emoji": true,
+                "text": "Deny"
               },
-              "value": "click_me_123"
-            },
-            {
-              "type": "button",
-              "text": {
-                "type": "plain_text",
-                "text": "Ler Ros",
-                "emoji": true
-              },
+              "style": "danger",
               "value": "click_me_123"
             }
           ]
@@ -101,15 +51,15 @@ const test = () => {
     }
 
     axios.post(slackHook, complexMsg)
-      .then(data => console.log(`Sucess`, data))
+      .then(data => console.log(`Success`, data))
       .catch(err => console.log(`Error =>`, err))
 
   } catch (error) {
     core.setFailed(error.message);
   }
 
-  setTimeout(() => console.log(`Waiting`), 5000)
-  return true
+
+
 }
 
 
