@@ -1,5 +1,7 @@
 name: 'Slack PR Action'
 description: 'Actions that will work with Slack'
+icon: 'activity'
+color: 'purple'
 inputs:
   slack_hook:
     description: 'Who to greet'
