@@ -24,16 +24,15 @@ try {
 
   const options = {
     method: 'post',
-    url: slackHook,
+    url: `${slackHook}`,
     data: JSON.stringify(jsonData),
     headers: { 'content-type': 'application/json' }
   }
 
-  try {
-    axios.post(options)
-  } catch (err) {
-    console.log(`Error =>`, err)
-  }
+  axios.post(options)
+    .then(data => console.log(`Sucess`))
+    .catch(err => console.log(`Error =>`, err))
+  
 } catch (error) {
   core.setFailed(error.message);
 }
