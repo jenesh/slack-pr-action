@@ -1,10 +1,11 @@
+require('dotenv').config()
 const core = require('@actions/core');
 const github = require('@actions/github');
 const axios = require('axios');
 
 const test = () => {
   try {
-    const slackHook = `https://hooks.slack.com/services/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`
+    const slackHook = process.env.slackHook
 
     console.log(`SLACK HOOK TYPE`, typeof slackHook)
     console.log(`SLACK HOOK`, slackHook)
