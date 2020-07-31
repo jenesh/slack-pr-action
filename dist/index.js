@@ -903,6 +903,126 @@ module.exports = require("os");
 
 /***/ }),
 
+/***/ 113:
+/***/ (function(module, __unusedexports, __webpack_require__) {
+
+/* @flow */
+/*::
+
+type DotenvParseOptions = {
+  debug?: boolean
+}
+
+// keys and values from src
+type DotenvParseOutput = { [string]: string }
+
+type DotenvConfigOptions = {
+  path?: string, // path to .env file
+  encoding?: string, // encoding of .env file
+  debug?: string // turn on logging for debugging purposes
+}
+
+type DotenvConfigOutput = {
+  parsed?: DotenvParseOutput,
+  error?: Error
+}
+
+*/
+
+const fs = __webpack_require__(747)
+const path = __webpack_require__(622)
+
+function log (message /*: string */) {
+  console.log(`[dotenv][DEBUG] ${message}`)
+}
+
+const NEWLINE = '\n'
+const RE_INI_KEY_VAL = /^\s*([\w.-]+)\s*=\s*(.*)?\s*$/
+const RE_NEWLINES = /\\n/g
+const NEWLINES_MATCH = /\n|\r|\r\n/
+
+// Parses src into an Object
+function parse (src /*: string | Buffer */, options /*: ?DotenvParseOptions */) /*: DotenvParseOutput */ {
+  const debug = Boolean(options && options.debug)
+  const obj = {}
+
+  // convert Buffers before splitting into lines and processing
+  src.toString().split(NEWLINES_MATCH).forEach(function (line, idx) {
+    // matching "KEY' and 'VAL' in 'KEY=VAL'
+    const keyValueArr = line.match(RE_INI_KEY_VAL)
+    // matched?
+    if (keyValueArr != null) {
+      const key = keyValueArr[1]
+      // default undefined or missing values to empty string
+      let val = (keyValueArr[2] || '')
+      const end = val.length - 1
+      const isDoubleQuoted = val[0] === '"' && val[end] === '"'
+      const isSingleQuoted = val[0] === "'" && val[end] === "'"
+
+      // if single or double quoted, remove quotes
+      if (isSingleQuoted || isDoubleQuoted) {
+        val = val.substring(1, end)
+
+        // if double quoted, expand newlines
+        if (isDoubleQuoted) {
+          val = val.replace(RE_NEWLINES, NEWLINE)
+        }
+      } else {
+        // remove surrounding whitespace
+        val = val.trim()
+      }
+
+      obj[key] = val
+    } else if (debug) {
+      log(`did not match key and value when parsing line ${idx + 1}: ${line}`)
+    }
+  })
+
+  return obj
+}
+
+// Populates process.env from .env file
+function config (options /*: ?DotenvConfigOptions */) /*: DotenvConfigOutput */ {
+  let dotenvPath = path.resolve(process.cwd(), '.env')
+  let encoding /*: string */ = 'utf8'
+  let debug = false
+
+  if (options) {
+    if (options.path != null) {
+      dotenvPath = options.path
+    }
+    if (options.encoding != null) {
+      encoding = options.encoding
+    }
+    if (options.debug != null) {
+      debug = true
+    }
+  }
+
+  try {
+    // specifying an encoding returns a string instead of a buffer
+    const parsed = parse(fs.readFileSync(dotenvPath, { encoding }), { debug })
+
+    Object.keys(parsed).forEach(function (key) {
+      if (!Object.prototype.hasOwnProperty.call(process.env, key)) {
+        process.env[key] = parsed[key]
+      } else if (debug) {
+        log(`"${key}" is already defined in \`process.env\` and will not be overwritten`)
+      }
+    })
+
+    return { parsed }
+  } catch (e) {
+    return { error: e }
+  }
+}
+
+module.exports.config = config
+module.exports.parse = parse
+
+
+/***/ }),
+
 /***/ 123:
 /***/ (function(module) {
 
@@ -11125,21 +11245,14 @@ module.exports = function (x) {
 /***/ 882:
 /***/ (function(__unusedmodule, __unusedexports, __webpack_require__) {
 
+__webpack_require__(113).config()
 const core = __webpack_require__(236);
 const github = __webpack_require__(568);
 const axios = __webpack_require__(910);
 
 const test = () => {
   try {
-    // const slackHook = `https://hooks.slack.com/services/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`
-    const slackHook = `https://hooks.slack.com/services/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`
-
-    console.log(`SLACK HOOK TYPE`, typeof slackHook)
-    console.log(`SLACK HOOK`, slackHook)
-
-    const jsonData = {
-      text: 'Hello world!'
-    }
+    const slackHook = process.env.slackHook
 
     const complexMsg = {
       "blocks": [
@@ -11147,50 +11260,8 @@ const test = () => {
           "type": "section",
           "text": {
             "type": "mrkdwn",
-            "text": "Hello, Assistant to the Regional Manager Dwight! *Michael Scott* wants to know where you'd like to take the Paper Company investors to dinner tonight.\n\n *Please select a restaurant:*"
+            "text": "You have a new request:\n*<fakeLink.toEmployeeProfile.com|Fred Enriquez - New device request>*"
           }
-        },
-        {
-          "type": "divider"
-        },
-        {
-          "type": "section",
-          "text": {
-            "type": "mrkdwn",
-            "text": "*Farmhouse Thai Cuisine*\n:star::star::star::star: 1528 reviews\n They do have some vegan options, like the roti and curry, plus they have a ton of salad stuff and noodles can be ordered without meat!! They have something for everyone here"
-          },
-          "accessory": {
-            "type": "image",
-            "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/c7ed05m9lC2EmA3Aruue7A/o.jpg",
-            "alt_text": "alt text for image"
-          }
-        },
-        {
-          "type": "section",
-          "text": {
-            "type": "mrkdwn",
-            "text": "*Kin Khao*\n:star::star::star::star: 1638 reviews\n The sticky rice also goes wonderfully with the caramelized pork belly, which is absolutely melt-in-your-mouth and so soft."
-          },
-          "accessory": {
-            "type": "image",
-            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/korel-1YjNtFtJlMTaC26A/o.jpg",
-            "alt_text": "alt text for image"
-          }
-        },
-        {
-          "type": "section",
-          "text": {
-            "type": "mrkdwn",
-            "text": "*Ler Ros*\n:star::star::star::star: 2082 reviews\n I would really recommend the  Yum Koh Moo Yang - Spicy lime dressing and roasted quick marinated pork shoulder, basil leaves, chili & rice powder."
-          },
-          "accessory": {
-            "type": "image",
-            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/DawwNigKJ2ckPeDeDM7jAg/o.jpg",
-            "alt_text": "alt text for image"
-          }
-        },
-        {
-          "type": "divider"
         },
         {
           "type": "actions",
@@ -11199,28 +11270,21 @@ const test = () => {
               "type": "button",
               "text": {
                 "type": "plain_text",
-                "text": "Farmhouse",
-                "emoji": true
+                "emoji": true,
+                "text": "Approve"
               },
-              "value": "click_me_123"
+              "style": "primary",
+              "value": `${github.context.payload.pull_request.number}`
             },
             {
               "type": "button",
               "text": {
                 "type": "plain_text",
-                "text": "Kin Khao",
-                "emoji": true
+                "emoji": true,
+                "text": "Deny"
               },
-              "value": "click_me_123"
-            },
-            {
-              "type": "button",
-              "text": {
-                "type": "plain_text",
-                "text": "Ler Ros",
-                "emoji": true
-              },
-              "value": "click_me_123"
+              "style": "danger",
+              "value": `${github.context.payload.pull_request.number}`
             }
           ]
         }
@@ -11228,17 +11292,13 @@ const test = () => {
     }
 
     axios.post(slackHook, complexMsg)
-      .then(data => console.log(`Sucess`, data))
+      .then(data => console.log(`Success`, data))
       .catch(err => console.log(`Error =>`, err))
 
   } catch (error) {
     core.setFailed(error.message);
   }
-
-  setTimeout(() => console.log(`Waiting`), 5000)
-  return true
 }
-
 
 test()
 
