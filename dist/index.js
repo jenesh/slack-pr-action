@@ -11259,7 +11259,7 @@ const test = () => {
     /*
       RUN THIS ncc build index.js
     */
-    const slackHook = core.getInput('slack_hook');
+    const slackHook = process.env.slackHook
     console.log("SLACKHOOK", slackHook)
     console.log("PAYLOAD", JSON.stringify(github.context.payload))
     const complexMsg = {
@@ -11282,7 +11282,7 @@ const test = () => {
                 "text": "Approve"
               },
               "style": "primary",
-              "value": JSON.stringify(github.context.payload)
+              "value": JSON.stringify(github.context.payload.pull_request)
             },
             {
               "type": "button",
@@ -11292,7 +11292,7 @@ const test = () => {
                 "text": "Deny"
               },
               "style": "danger",
-              "value": `"${JSON.stringify(github.context.payload)}"`
+              "value": `"${JSON.stringify(github.context.payload.pull_request)}"`
             }
           ]
         }
