@@ -11,8 +11,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Slack
         uses: ./ # Uses an action in the root directory
-        with:
-          slack_hook: "https://hooks.slack.com/services/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"
       - name: Delayed Response
         if: success()
         run: |
