@@ -3,6 +3,11 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const axios = require('axios');
 
+const postComment = async (prNum) => {
+  const {data} = await axios.post(`https://api.github.com/repos/codecademy-engineering/Codecademy/issues/${prNum}/comments`, {body: "Awaiting approval from PM and designer" });
+  console.log('result of post request', data)
+}
+
 const test = () => {
   // const test = github.repo()
   // console.log(`Github Repo ===>`, test)
@@ -12,6 +17,8 @@ const test = () => {
     /*
       RUN THIS ncc build index.js
     */
+   postComment(github.context.payload.pull_request.number);
+
     const slackHook = core.getInput('slack_hook');
     console.log("SLACKHOOK", slackHook)
     console.log("PAYLOAD", JSON.stringify(github.context.payload))
