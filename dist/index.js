@@ -11282,7 +11282,7 @@ const test = () => {
                 "text": "Approve"
               },
               "style": "primary",
-              "value": JSON.stringify(github.context.payload.pull_request)
+              "value": `"${JSON.stringify(github.context.payload.pull_request)}"`
             },
             {
               "type": "button",
