@@ -16,9 +16,12 @@ const postComment = async (prNum) => {
       Authorization: `Bearer ${ghToken}`,
     }
   }
-
-  const { data } = await axios.post(url, config);
-  console.log('result of post request', data)
+  try {
+    const { data } = await axios.post(url, config);
+    console.log('result of post request', data)
+  } catch (err) {
+    console.log(`Comment Error: `, err)
+  }
 }
 
 const test = () => {
