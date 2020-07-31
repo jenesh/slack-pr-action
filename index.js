@@ -27,7 +27,7 @@ const test = () => {
                 "text": "Approve"
               },
               "style": "primary",
-              "value": "https://www.google.com"
+              "value": `${github.context.payload.pull_request.number}`
             },
             {
               "type": "button",
@@ -37,7 +37,7 @@ const test = () => {
                 "text": "Deny"
               },
               "style": "danger",
-              "value": "click_me_123"
+              "value": `${github.context.payload.pull_request.number}`
             }
           ]
         }
