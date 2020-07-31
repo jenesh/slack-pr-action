@@ -11291,7 +11291,7 @@ const test = () => {
                 "text": "Deny"
               },
               "style": "danger",
-              "value": `${github.context.payload}`
+              "value": `${github.context.payload.pull_requests}`
             }
           ]
         }
