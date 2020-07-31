@@ -4,13 +4,13 @@ const github = require('@actions/github');
 const axios = require('axios');
 
 const test = () => {
-  const test = github.repo()
-  console.log(`Github Repo ===>`, test)
+  // const test = github.repo()
+  // console.log(`Github Repo ===>`, test)
 
 
   try {
-    // const slackHook = core.getInput('slack_hook');
-    const slackHook = `asdfasdf`
+    const slackHook = core.getInput('slack_hook');
+    // const slackHook = `asdfasdf`
     console.log(slackHook)
     const complexMsg = {
       "blocks": [
