@@ -4,6 +4,10 @@ const github = require('@actions/github');
 const axios = require('axios');
 
 const test = () => {
+  const test = github.repo()
+  console.log(test)
+
+
   try {
     const slackHook = process.env.slackHook
 
