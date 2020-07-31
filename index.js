@@ -5,7 +5,7 @@ const axios = require('axios');
 
 const test = () => {
   const test = github.repo()
-  console.log(test)
+  console.log(`Github Repo ===>`, test)
 
 
   try {
