@@ -11251,9 +11251,14 @@ const github = __webpack_require__(568);
 const axios = __webpack_require__(910);
 
 const test = () => {
-  try {
-    const slackHook = process.env.slackHook
+  const test = github.repo()
+  console.log(`Github Repo ===>`, test)
 
+
+  try {
+    // const slackHook = core.getInput('slack_hook');
+    const slackHook = `asdfasdf`
+    console.log(slackHook)
     const complexMsg = {
       "blocks": [
         {
@@ -11301,6 +11306,7 @@ const test = () => {
 }
 
 test()
+
 
 /***/ }),
 
