@@ -2,10 +2,11 @@ require('dotenv').config()
 const core = require('@actions/core');
 const github = require('@actions/github');
 const axios = require('axios');
+const { Octokit } = require("@octokit/core");
 
 const postComment = async (prNum) => {
   const ghToken = core.getInput('gh_token');
-  const url = `https://api.github.com/repos/codecademy-engineering/Codecademy/pulls/${prNum}/comments`
+  const url = `https://api.github.com/repos/codecademy-engineering/Codecademy/pull/${prNum}/comments`
 
   const config = {
     method: 'post',
@@ -18,6 +19,16 @@ const postComment = async (prNum) => {
   }
   try {
     const { data } = await axios.post(url, config);
+
+    // const data = await octokit.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/comments', {
+    //   owner: 'codecademy-engineering',
+    //   repo: 'Codecademy',
+    //   pull_number: prNum,
+    //   body: 'Waiting for PM and PD approval',
+    //   commit_id: 'commit_id',
+    //   path: 'path'
+    // })
+
     console.log('result of post request', data)
   } catch (err) {
     console.log(`Comment Error: `, err)
