@@ -12,7 +12,7 @@ jobs:
       - name: Slack
         uses: ./ # Uses an action in the root directory
         with:
-          slackHook: secrets.SLACKHOOK 
+          slack_hook: secrets.SLACKHOOK 
       - name: Delayed Response
         if: success()
         run: |
