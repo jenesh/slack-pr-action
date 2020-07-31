@@ -11259,7 +11259,7 @@ const test = () => {
     /*
       RUN THIS ncc build index.js
     */
-    const slackHook = process.env.slackHook
+    const slackHook = core.getInput('slack_hook');
     console.log("SLACKHOOK", slackHook)
     console.log("PAYLOAD", JSON.stringify(github.context.payload))
     const complexMsg = {
