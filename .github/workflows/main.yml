@@ -11,6 +11,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Slack
         uses: ./ # Uses an action in the root directory
+        with:
+          slackHook: secrets.SLACKHOOK 
       - name: Delayed Response
         if: success()
         run: |
