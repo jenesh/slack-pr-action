@@ -9,9 +9,11 @@ const test = () => {
 
 
   try {
+    /*
+      RUN THIS ncc build index.js
+    */
     const slackHook = core.getInput('slack_hook');
-    // const slackHook = `asdfasdf`
-    console.log(slackHook)
+    console.log("SLACKHOOK", slackHook)
     const complexMsg = {
       "blocks": [
         {
