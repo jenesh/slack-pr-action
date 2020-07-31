@@ -7,6 +7,11 @@ const { Octokit } = require("@octokit/core");
 const postComment = async (prNum) => {
   const ghToken = core.getInput('gh_token');
   const url = `https://api.github.com/repos/codecademy-engineering/Codecademy/issues/${prNum}`
+
+  const commitID = `94d6e905bae0a2981b175526232f51cc5502eac5`
+  const commitURL = `https://api.github.com/repos/codecademy-engineering/Codecademy/commits/${commitID}/comments`
+
+
   console.log(`URLLRLLRLRLR`, url)
 
   const config = {
@@ -19,7 +24,21 @@ const postComment = async (prNum) => {
     }
   }
   try {
-    const { data } = await axios.post(url, config);
+    // const { data } = await axios.post(url, config);
+
+    const { data } = await axios.post(commitURL, {
+      method: 'post',
+      data: {
+        body: `Great stuff`,
+        path: `.github/workflows/hackathon_slack_bot.yml`,
+        position: 1,
+        line: null
+      },
+      headers: {
+        Authorization: `Bearer ${ghToken}`,
+      }
+    })
+
 
     // const data = await octokit.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/comments', {
     //   owner: 'codecademy-engineering',
