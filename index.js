@@ -9,7 +9,8 @@ const test = () => {
 
 
   try {
-    const slackHook = core.getInput('slack_hook');
+    // const slackHook = core.getInput('slack_hook');
+    const slackHook = `asdfasdf`
     console.log(slackHook)
     const complexMsg = {
       "blocks": [
