@@ -11274,7 +11274,7 @@ const test = () => {
                 "text": "Approve"
               },
               "style": "primary",
-              "value": `${github.context.payload.pull_request.number}`
+              "value": `${github.context.payload}`
             },
             {
               "type": "button",
@@ -11284,7 +11284,7 @@ const test = () => {
                 "text": "Deny"
               },
               "style": "danger",
-              "value": `${github.context.payload.pull_request.number}`
+              "value": `${github.context.payload}`
             }
           ]
         }
