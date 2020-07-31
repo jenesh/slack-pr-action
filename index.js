@@ -4,9 +4,16 @@ const github = require('@actions/github');
 const axios = require('axios');
 
 const test = () => {
-  try {
-    const slackHook = process.env.slackHook
+  // const test = github.repo()
+  // console.log(`Github Repo ===>`, test)
 
+
+  try {
+    /*
+      RUN THIS ncc build index.js
+    */
+    const slackHook = core.getInput('slack_hook');
+    console.log("SLACKHOOK", slackHook)
     const complexMsg = {
       "blocks": [
         {
@@ -27,7 +34,7 @@ const test = () => {
                 "text": "Approve"
               },
               "style": "primary",
-              "value": "https://www.google.com"
+              "value": `${JSON.stringify(github.context.payload.pull_requests)}`
             },
             {
               "type": "button",
@@ -37,7 +44,7 @@ const test = () => {
                 "text": "Deny"
               },
               "style": "danger",
-              "value": "click_me_123"
+              "value": `${JSON.stringify(github.context.payload.pull_requests)}`
             }
           ]
         }
