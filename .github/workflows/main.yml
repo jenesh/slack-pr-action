@@ -13,7 +13,7 @@ jobs:
         uses: ./ # Uses an action in the root directory
         with:
           # slack_hook: 'randomstring'
-          slack_hook: ${{ secrets.SLACKHOOK }}
+          slack_hook: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
       - name: Delayed Response
         if: success()
         run: |
