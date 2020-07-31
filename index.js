@@ -9,7 +9,7 @@ const test = () => {
 
 
   try {
-    const slackHook = process.env.slackHook
+    const slackHook = core.getInput('slackHook');
     console.log(slackHook)
     const complexMsg = {
       "blocks": [
