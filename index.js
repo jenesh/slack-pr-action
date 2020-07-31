@@ -10,7 +10,7 @@ const test = () => {
 
   try {
     const slackHook = process.env.slackHook
-
+    console.log(slackHook)
     const complexMsg = {
       "blocks": [
         {
