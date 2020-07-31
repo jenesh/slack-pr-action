@@ -5,7 +5,7 @@ const axios = require('axios');
 
 const postComment = async (prNum) => {
   const ghToken = core.getInput('gh_token');
-  const url = `https://api.github.com/repos/codecademy-engineering/Codecademy/issues/${prNum}/comments`
+  const url = `https://api.github.com/repos/codecademy-engineering/Codecademy/pulls/${prNum}/comments`
 
   const config = {
     method: 'post',
