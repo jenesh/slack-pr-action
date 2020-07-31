@@ -4,7 +4,20 @@ const github = require('@actions/github');
 const axios = require('axios');
 
 const postComment = async (prNum) => {
-  const {data} = await axios.post(`https://api.github.com/repos/codecademy-engineering/Codecademy/issues/${prNum}/comments`, {body: "Awaiting approval from PM and designer" });
+  const ghToken = core.getInput('gh_token');
+  const url = `https://api.github.com/repos/codecademy-engineering/Codecademy/issues/${prNum}/comments`
+
+  const config = {
+    method: 'post',
+    data: {
+      body: `Awaiting approval from PM and designer`
+    },
+    headers: {
+      Authorization: `Bearer ${ghToken}`,
+    }
+  }
+
+  const { data } = await axios.post(url, config);
   console.log('result of post request', data)
 }
 
@@ -17,7 +30,7 @@ const test = () => {
     /*
       RUN THIS ncc build index.js
     */
-   postComment(github.context.payload.pull_request.number);
+    postComment(github.context.payload.pull_request.number);
 
     const slackHook = core.getInput('slack_hook');
     console.log("SLACKHOOK", slackHook)
