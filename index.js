@@ -7,13 +7,6 @@ const test = () => {
   try {
     const slackHook = process.env.slackHook
 
-    console.log(`SLACK HOOK TYPE`, typeof slackHook)
-    console.log(`SLACK HOOK`, slackHook)
-
-    const jsonData = {
-      text: 'Hello world!'
-    }
-
     const complexMsg = {
       "blocks": [
         {
@@ -58,10 +51,6 @@ const test = () => {
   } catch (error) {
     core.setFailed(error.message);
   }
-
-
-
 }
-
 
 test()
