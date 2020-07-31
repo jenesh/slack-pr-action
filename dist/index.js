@@ -11261,7 +11261,6 @@ const test = () => {
     */
     const slackHook = core.getInput('slack_hook');
     console.log("SLACKHOOK", slackHook)
-    console.log("CONTEXT", JSON.stringify(github.context))
     console.log("PAYLOAD", JSON.stringify(github.context.payload))
     const complexMsg = {
       "blocks": [
