@@ -11261,6 +11261,7 @@ const test = () => {
     */
     const slackHook = core.getInput('slack_hook');
     console.log("SLACKHOOK", slackHook)
+    console.log("PAYLOAD", github.context.payload.pull_requests)
     const complexMsg = {
       "blocks": [
         {
@@ -11281,7 +11282,7 @@ const test = () => {
                 "text": "Approve"
               },
               "style": "primary",
-              "value": `${github.context.payload}`
+              "value": `${JSON.stringify(github.context.payload.pull_requests)}`
             },
             {
               "type": "button",
@@ -11291,7 +11292,7 @@ const test = () => {
                 "text": "Deny"
               },
               "style": "danger",
-              "value": `${github.context.payload.pull_requests}`
+              "value": `${JSON.stringify(github.context.payload.pull_requests)}`
             }
           ]
         }
