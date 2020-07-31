@@ -35,7 +35,7 @@ const test = () => {
                 "text": "Approve"
               },
               "style": "primary",
-              "value": `"${JSON.stringify(github.context.payload.pull_request)}"`
+              "value": "hello"
             },
             {
               "type": "button",
@@ -45,7 +45,7 @@ const test = () => {
                 "text": "Deny"
               },
               "style": "danger",
-              "value": `"${JSON.stringify(github.context.payload.pull_request)}"`
+              "value": "hello"
             }
           ]
         }
