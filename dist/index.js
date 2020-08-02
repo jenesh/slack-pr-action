@@ -6884,7 +6884,7 @@ const postComment = async (prNum) => {
 
       const seconds = num => num * 1000
 
-      setTimeout(update, seconds(10))
+      // setTimeout(update, seconds(10))
     })
     .catch(err => console.log(`Adding Comment Error: `, err))
 }
@@ -6943,7 +6943,13 @@ const postSlackMsg = () => {
     }
 
     axios.post(slackHook, complexMsg)
-      .then(data => console.log(`Slack Hook Success!`, data))
+      .then(data => {
+        console.log(`Slack Hook Success!`)
+        axios.post(`https://baby-bot-server.herokuapp.com`, {
+          method: 'post',
+          data
+        })
+      })
       .catch(err => console.log(`Slack Hook Error =>`, err))
 
   } catch (error) {
