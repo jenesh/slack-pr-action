@@ -38,7 +38,7 @@ const postComment = async (prNum) => {
     .catch(err => console.log(`Adding Comment Error: `, err))
 }
 
-const test = () => {
+const postSlackMsg = () => {
   try {
     /*
       RUN THIS ncc build index.js
@@ -52,7 +52,7 @@ const test = () => {
     const prNumber = `${JSON.stringify(github.context.payload.pull_request.number)}`
     const token = ghToken
 
-    const prAndToken = prNumber + '/' + token
+    // const prAndToken = prNumber + '/' + token
 
     const complexMsg = {
       "blocks": [
@@ -74,7 +74,7 @@ const test = () => {
                 "text": "Approve"
               },
               "style": "primary",
-              "value": prAndToken
+              "value": "Approve"
             },
             {
               "type": "button",
@@ -84,7 +84,7 @@ const test = () => {
                 "text": "Deny"
               },
               "style": "danger",
-              "value": prAndToken
+              "value": "Deny"
             }
           ]
         }
@@ -92,7 +92,7 @@ const test = () => {
     }
 
     axios.post(slackHook, complexMsg)
-      .then(data => console.log(`Slack Hook Success!`))
+      .then(data => console.log(`Slack Hook Success!`, data))
       .catch(err => console.log(`Slack Hook Error =>`, err))
 
   } catch (error) {
@@ -123,4 +123,6 @@ const updatingComment = () => {
   }
 }
 
-test()
+postSlackMsg()
+
+
