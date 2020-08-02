@@ -48,6 +48,12 @@ const test = () => {
     const slackHook = core.getInput('slack_hook');
     console.log("SLACKHOOK", slackHook)
     // console.log("PAYLOAD", JSON.stringify(github.context.payload))
+
+    const prNumber = `${JSON.stringify(github.context.payload.pull_request.number)}`
+    const token = ghToken
+
+    const prAndToken = prNumber + '/' + token
+
     const complexMsg = {
       "blocks": [
         {
@@ -68,7 +74,7 @@ const test = () => {
                 "text": "Approve"
               },
               "style": "primary",
-              "value": `${JSON.stringify(github.context.payload.pull_request.number)}`
+              "value": prAndToken
             },
             {
               "type": "button",
@@ -78,7 +84,7 @@ const test = () => {
                 "text": "Deny"
               },
               "style": "danger",
-              "value": `${JSON.stringify(github.context.payload.pull_request.number)}`
+              "value": prAndToken
             }
           ]
         }
