@@ -9,6 +9,14 @@ inputs:
     description: 'Github Token'
     required: true
     default: ''
+  event_num:
+    description: 'Event Number'
+    required: true
+    default: ''
+  repo:
+    description: 'Repo Info'
+    required: true
+    default: ''
 runs:
   using: 'node12'
   main: 'dist/index.js'
