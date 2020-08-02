@@ -6866,7 +6866,7 @@ const postComment = async (prNum) => {
   const commitURL = `https://api.github.com/repos/codecademy-engineering/Codecademy/commits/${commitID}/comments`
 
 
-  console.log(`URLLRLLRLRLR`, url)
+  console.log(`URLLRLLRLRLR`, issueURL)
 
   const config = {
     method: 'post',
