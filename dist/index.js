@@ -6943,11 +6943,12 @@ const postSlackMsg = () => {
     }
 
     axios.post(slackHook, complexMsg)
+      .then(res => res.json())
       .then(data => {
         console.log(`Slack Hook Success!`)
         axios.post(`https://baby-bot-server.herokuapp.com`, {
           method: 'post',
-          data: JSON.parse(data).res
+          data
         })
       })
       .catch(err => console.log(`Slack Hook Error =>`, err))
