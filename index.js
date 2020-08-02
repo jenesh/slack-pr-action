@@ -16,7 +16,7 @@ const postComment = async (prNum) => {
 
   octokit.issues.createComment(config)
     .then(newComment => {
-      console.log('Results from post request =====> ', newComment)
+      console.log(`Added comment on PR!`)
       const commentID = newComment.data.id
       const commentRefURL = newComment.data.html_url
       const updateCommentURL = newComment.data.url
@@ -27,7 +27,7 @@ const postComment = async (prNum) => {
           comment_id: commentID,
           body: `PM has approved! 🚀`
         })
-          .then(data => console.log(`Updated Successfully`))
+          .then(data => console.log(`Updated comment on PR successfully`))
           .catch(err => console.log(`Update error`, err))
       }
 
@@ -46,7 +46,7 @@ const postSlackMsg = () => {
     postComment(github.context.payload.pull_request.number);
 
     const slackHook = core.getInput('slack_hook');
-    console.log("SLACKHOOK", slackHook)
+    // console.log("SLACKHOOK", slackHook)
     // console.log("PAYLOAD", JSON.stringify(github.context.payload))
 
     const prNumber = `${JSON.stringify(github.context.payload.pull_request.number)}`
