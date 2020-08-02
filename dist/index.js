@@ -6884,7 +6884,7 @@ const postComment = async (prNum) => {
 
       const seconds = num => num * 1000
 
-      // setTimeout(update, seconds(10))
+      setTimeout(update, seconds(10))
     })
     .catch(err => console.log(`Adding Comment Error: `, err))
 }
