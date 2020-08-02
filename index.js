@@ -41,22 +41,29 @@ const postComment = async (prNum) => {
     }
 
     const headers = {
-        authorization: `Bearer ${ghToken}`
+      authorization: `Bearer ${ghToken}`
     }
 
-    const { data } = await axios.post(issueURL, body, headers)
+    // const { data } = await axios.post(issueURL, body, headers)
+
+    const octokit = new github.GitHub(ghToken)
+    const newComment = await octokit.issues.createComment({
+      ...github.context.repo,
+      issue_number: prNum,
+      body: `Awaiting approval from PM and PD!`
+    })
 
 
-  // const data = await octokit.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/comments', {
-  //   owner: 'codecademy-engineering',
-  //   repo: 'Codecademy',
-  //   pull_number: prNum,
-  //   body: 'Waiting for PM and PD approval',
-  //   commit_id: 'commit_id',
-  //   path: 'path'
-  // })
+    // const data = await octokit.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/comments', {
+    //   owner: 'codecademy-engineering',
+    //   repo: 'Codecademy',
+    //   pull_number: prNum,
+    //   body: 'Waiting for PM and PD approval',
+    //   commit_id: 'commit_id',
+    //   path: 'path'
+    // })
 
-  console.log('Results from post request =====> ', data)
+    console.log('Results from post request =====> ', newComment)
 
   } catch (err) {
     console.log(`Comment Error: `, err)
@@ -115,8 +122,8 @@ const test = () => {
     }
 
     axios.post(slackHook, complexMsg)
-      .then(data => console.log(`Success`, data))
-      .catch(err => console.log(`Error =>`, err))
+      .then(data => console.log(`Slack Hook Success!`))
+      .catch(err => console.log(`Slack Hook Error =>`, err))
 
   } catch (error) {
     core.setFailed(error.message);
