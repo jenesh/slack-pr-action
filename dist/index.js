@@ -6876,7 +6876,7 @@ const postComment = async (prNum) => {
         octokit.issues.updateComment({
           ...github.context.repo,
           comment_id: commentID,
-          body: `Awaiting approval from PM and PD, updated!`
+          body: `PM has approved! 🚀`
         })
           .then(data => console.log(`Updated Successfully`))
           .catch(err => console.log(`Update error`, err))
@@ -6911,7 +6911,7 @@ const postSlackMsg = () => {
           "type": "section",
           "text": {
             "type": "mrkdwn",
-            "text": "You have a new request:\n*<fakeLink.toEmployeeProfile.com|Fred Enriquez - New device request>*"
+            "text": "Awaiting review from PM/PD!\n*<https://caiman.codecademy.com/ | Link to site >*"
           }
         },
         {
@@ -6943,15 +6943,16 @@ const postSlackMsg = () => {
     }
 
     axios.post(slackHook, complexMsg)
-      .then(res => res.json())
-      .then(data => {
-        console.log(`Slack Hook Success!`)
-        axios.post(`https://baby-bot-server.herokuapp.com`, {
-          method: 'post',
-          data
-        })
-      })
-      .catch(err => console.log(`Slack Hook Error =>`, err))
+    console.log(`Slack message has been posted!`)
+      // .then(res => res.json())
+      // .then(data => {
+      //   console.log(`Slack Hook Success!`)
+      //   axios.post(`https://baby-bot-server.herokuapp.com`, {
+      //     method: 'post',
+      //     data
+      //   })
+      // })
+      // .catch(err => console.log(`Slack Hook Error =>`, err))
 
   } catch (error) {
     core.setFailed(error.message);
