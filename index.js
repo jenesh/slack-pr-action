@@ -6,7 +6,10 @@ const { Octokit } = require("@octokit/core");
 
 const postComment = async (prNum) => {
   const ghToken = core.getInput('gh_token');
-  const url = `https://api.github.com/repos/codecademy-engineering/Codecademy/issues/${prNum}`
+  const eventNum = core.getInput('event_num')
+  const repo = core.getInput('repo')
+
+  const issueURL = `https://api.github.com/repos/${repo}/issues/${eventNum}/comments`
 
   const commitID = `94d6e905bae0a2981b175526232f51cc5502eac5`
   const commitURL = `https://api.github.com/repos/codecademy-engineering/Codecademy/commits/${commitID}/comments`
@@ -24,12 +27,13 @@ const postComment = async (prNum) => {
     }
   }
   try {
-    // const { data } = await axios.post(url, config);
-
     const body = {
       method: 'post',
       data: {
-        body: `Great stuff`,
+        body: `Hello from the other side. Your PR is waiting from approval from
+        PM: ❌
+        PD: ❌
+        `,
         path: `.github/workflows/hackathon_slack_bot.yml`,
         position: 1,
         line: null
@@ -40,7 +44,7 @@ const postComment = async (prNum) => {
         authorization: `Bearer ${ghToken}`
     }
 
-    const { data } = await axios.post(commitURL, body, headers)
+    const { data } = await axios.post(issueURL, body, headers)
 
 
   // const data = await octokit.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/comments', {
@@ -52,10 +56,11 @@ const postComment = async (prNum) => {
   //   path: 'path'
   // })
 
-  console.log('Results from post request', data)
-} catch (err) {
-  console.log(`Comment Error: `, err)
-}
+  console.log('Results from post request =====> ', data)
+
+  } catch (err) {
+    console.log(`Comment Error: `, err)
+  }
 }
 
 const test = () => {
