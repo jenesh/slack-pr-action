@@ -6877,33 +6877,36 @@ const postComment = async (prNum) => {
   try {
     // const { data } = await axios.post(url, config);
 
-    const { data } = await axios.post(commitURL, {
+    const body = {
       method: 'post',
       data: {
         body: `Great stuff`,
         path: `.github/workflows/hackathon_slack_bot.yml`,
         position: 1,
         line: null
-      },
-      headers: {
-        Authorization: `Bearer ${ghToken}`,
       }
-    })
+    }
+
+    const headers = {
+        authorization: `Bearer ${ghToken}`
+    }
+
+    const { data } = await axios.post(commitURL, body, headers)
 
 
-    // const data = await octokit.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/comments', {
-    //   owner: 'codecademy-engineering',
-    //   repo: 'Codecademy',
-    //   pull_number: prNum,
-    //   body: 'Waiting for PM and PD approval',
-    //   commit_id: 'commit_id',
-    //   path: 'path'
-    // })
+  // const data = await octokit.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/comments', {
+  //   owner: 'codecademy-engineering',
+  //   repo: 'Codecademy',
+  //   pull_number: prNum,
+  //   body: 'Waiting for PM and PD approval',
+  //   commit_id: 'commit_id',
+  //   path: 'path'
+  // })
 
-    console.log('result of post request', data)
-  } catch (err) {
-    console.log(`Comment Error: `, err)
-  }
+  console.log('Results from post request', data)
+} catch (err) {
+  console.log(`Comment Error: `, err)
+}
 }
 
 const test = () => {
