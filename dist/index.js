@@ -6947,7 +6947,7 @@ const postSlackMsg = () => {
         console.log(`Slack Hook Success!`)
         axios.post(`https://baby-bot-server.herokuapp.com`, {
           method: 'post',
-          data: JSON.stringify(data)
+          data: JSON.parse(data).res
         })
       })
       .catch(err => console.log(`Slack Hook Error =>`, err))
