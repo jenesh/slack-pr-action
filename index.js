@@ -4,77 +4,41 @@ const github = require('@actions/github');
 const axios = require('axios');
 const { Octokit } = require("@octokit/core");
 
+const ghToken = core.getInput('gh_token');
+
 const postComment = async (prNum) => {
-  const ghToken = core.getInput('gh_token');
-  const eventNum = core.getInput('event_num')
-  const repo = core.getInput('repo')
-
-  const issueURL = `https://api.github.com/repos/${repo}/issues/${eventNum}/comments`
-
-  const commitID = `94d6e905bae0a2981b175526232f51cc5502eac5`
-  const commitURL = `https://api.github.com/repos/codecademy-engineering/Codecademy/commits/${commitID}/comments`
-
-
-  console.log(`URLLRLLRLRLR`, issueURL)
-
+  const octokit = new github.GitHub(ghToken)
   const config = {
-    method: 'post',
-    data: {
-      body: `Awaiting approval from PM and designer`
-    },
-    headers: {
-      Authorization: `Bearer ${ghToken}`,
-    }
+    ...github.context.repo,
+    issue_number: prNum,
+    body: `Awaiting approval from PM and PD!`
   }
-  try {
-    const body = {
-      method: 'post',
-      data: {
-        body: `Hello from the other side. Your PR is waiting from approval from
-        PM: ❌
-        PD: ❌
-        `,
-        path: `.github/workflows/hackathon_slack_bot.yml`,
-        position: 1,
-        line: null
+
+  octokit.issues.createComment(config)
+    .then(newComment => {
+      console.log('Results from post request =====> ', newComment)
+      const commentID = newComment.data.id
+      const commentRefURL = newComment.data.html_url
+      const updateCommentURL = newComment.data.url
+
+      const update = () => {
+        octokit.issues.updateComment({
+          ...github.context.repo,
+          comment_id: commentID,
+          body: `Awaiting approval from PM and PD, updated!`
+        })
+          .then(data => console.log(`Updated Successfully`))
+          .catch(err => console.log(`Update error`, err))
       }
-    }
 
-    const headers = {
-      authorization: `Bearer ${ghToken}`
-    }
+      const seconds = num => num * 1000
 
-    // const { data } = await axios.post(issueURL, body, headers)
-
-    const octokit = new github.GitHub(ghToken)
-    const newComment = await octokit.issues.createComment({
-      ...github.context.repo,
-      issue_number: prNum,
-      body: `Awaiting approval from PM and PD!`
+      setTimeout(update, seconds(10))
     })
-
-
-    // const data = await octokit.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/comments', {
-    //   owner: 'codecademy-engineering',
-    //   repo: 'Codecademy',
-    //   pull_number: prNum,
-    //   body: 'Waiting for PM and PD approval',
-    //   commit_id: 'commit_id',
-    //   path: 'path'
-    // })
-
-    console.log('Results from post request =====> ', newComment)
-
-  } catch (err) {
-    console.log(`Comment Error: `, err)
-  }
+    .catch(err => console.log(`Adding Comment Error: `, err))
 }
 
 const test = () => {
-  // const test = github.repo()
-  // console.log(`Github Repo ===>`, test)
-
-
   try {
     /*
       RUN THIS ncc build index.js
@@ -83,7 +47,7 @@ const test = () => {
 
     const slackHook = core.getInput('slack_hook');
     console.log("SLACKHOOK", slackHook)
-    console.log("PAYLOAD", JSON.stringify(github.context.payload))
+    // console.log("PAYLOAD", JSON.stringify(github.context.payload))
     const complexMsg = {
       "blocks": [
         {
@@ -127,6 +91,29 @@ const test = () => {
 
   } catch (error) {
     core.setFailed(error.message);
+  }
+}
+
+// Might need some of this for updating comments
+const updatingComment = () => {
+  const eventNum = core.getInput('event_num')
+  const repo = core.getInput('repo')
+
+  const body = {
+    method: 'post',
+    data: {
+      body: `Hello from the other side. Your PR is waiting from approval from
+      PM: ❌
+      PD: ❌
+      `,
+      path: `.github/workflows/hackathon_slack_bot.yml`,
+      position: 1,
+      line: null
+    }
+  }
+
+  const headers = {
+    authorization: `Bearer ${ghToken}`
   }
 }
 
