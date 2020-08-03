@@ -1,25 +1,43 @@
-# Hello world JavaScript action
+# Slack PR Action
 
-This action prints "Hello World" or "Hello" + the name of a person to greet to the log. To learn how this action was built, see "[Creating a JavaScript action](https://help.github.com/en/articles/creating-a-javascript-action)" in the GitHub Help documentation.
+This action triggers a slack message to notify PM/PDs to test the live site based on the PR. 
 
 ## Inputs
 
-### `who-to-greet`
+### `slack_hook`
 
-**Required** The name of the person to greet. Default `"World"`.
+**Required** The slack hook endpoint to send the message to. Default `"World"`.
+
+
+### `gh_token`
+
+**Required** Token to authenticate the network requests for Github API. Default `""`.
+
+
+### `event_num`
+
+**Required** Event number which is also the PR number. Default `""`.
+
+
+### `repo`
+
+**Required** The repo that the PR is located in. Default `""`.
 
 ## Outputs
 
-### `time`
 
 The time we greeted you.
 
-## Example usage
+## Example usage of variables
 
 ```yaml
-uses: actions/hello-world-javascript-action@main
-with:
-  who-to-greet: 'Mona the Octocat'
+name: Slack PR Action
+  uses: jenesh/slack-pr-action@v0.5.2
+  with:
+    slack_hook: ${{ secrets.SLACK_HOOK }}
+    gh_token: ${{ secrets.GITHUB_TOKEN }}
+    event_num: ${{ github.event.number }}
+    repo: ${{ github.repository }}
 ```
 
 
