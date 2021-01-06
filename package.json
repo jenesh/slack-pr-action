@@ -21,7 +21,7 @@
     "@actions/core": "^1.1.0",
     "@actions/github": "^1.1.0",
     "@octokit/core": "^3.1.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "dotenv": "^8.2.0"
   }
 }
